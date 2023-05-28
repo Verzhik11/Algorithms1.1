@@ -83,7 +83,7 @@ public class StringListImpl implements StringList {
 
     @Override
     public int lastIndexOf(String item) {
-        for (int i = size; i >= 0; i--) {
+        for (int i = size - 1; i >= 0; i--) {
             if (repository[i].equals(item)) {
                 return i;
             }
@@ -137,11 +137,6 @@ public class StringListImpl implements StringList {
         }
     }
 
-    public void validateExistIndex(int index) {
-        if (repository[index] != null) {
-            throw new PlaceIsBusyException("В этой ячейке уже есть объект");
-        }
-    }
 
     @Override
     public String toString() {
@@ -150,7 +145,7 @@ public class StringListImpl implements StringList {
                 '}';
     }
 
-    private void resize(int newSize) {
+    public void resize(int newSize) {
         int size1 = size * 2;
         size1 = Math.max(size1, newSize);
         String[] newRepository = Arrays.copyOf(repository, size1);
