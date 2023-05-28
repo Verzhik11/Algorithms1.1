@@ -9,7 +9,7 @@ public class Main {
         System.out.println(stringList.indexOf("Ручка"));
         stringList.clear();
         System.out.println(stringList);
-        System.out.println(stringList.isEmpty());
+        System.out.println(stringList.equals(stringList));
 
 
 
