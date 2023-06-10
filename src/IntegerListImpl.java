@@ -154,16 +154,35 @@ public class IntegerListImpl implements IntegerList {
 
     }
 
-    private void sort() {
-        for (int i = 1; i < size; i++) {
-            int temp = repository[i];
-            int j = i;
-            while (j > 0 && repository[j - 1] >= temp) {
-                repository[j] = repository[j - 1];
-                j--;
-            }
-            repository[j] = temp;
+    public void sort() {
+       quickSort(repository, 0, repository.length - 1);
+    }
+    public static void quickSort(Integer[] arr, Integer begin, Integer end) {
+        if (begin < end) {
+            Integer partitionIndex = partition(arr, begin, end);
+            quickSort(arr, begin, partitionIndex - 1);
+            quickSort(arr, partitionIndex + 1, end);
         }
+
+    }
+
+    public static int partition(Integer[] arr, Integer begin, Integer end) {
+        Integer pivot = arr[end];
+        Integer i = begin - 1;
+        for (Integer j = begin; j < end; j++) {
+            if (arr[j] <= pivot) {
+                i++;
+                swapElements(arr, i, j);
+            }
+        }
+        swapElements(arr, i + 1, end);
+        return i + 1;
+
+    }
+    public static void swapElements(Integer[] arr, Integer indexA, Integer indexB) {
+        Integer temp = arr[indexA];
+        arr[indexA] = arr[indexB];
+        arr[indexB] = temp;
     }
 
     private boolean binarSearch(Integer item) {

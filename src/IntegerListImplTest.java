@@ -14,9 +14,9 @@ class IntegerListImplTest {
     IntegerListImpl out = new IntegerListImpl(3);
     @BeforeEach
     void setUp() {
-        out.add(1);
         out.add(2);
         out.add(3);
+        out.add(1);
     }
     @AfterEach
     void clearList() {
@@ -149,5 +149,12 @@ class IntegerListImplTest {
     void toArrayTest() {
         Integer [] test = {1, 2, 3};
         Assertions.assertArrayEquals(test, out.toArray());
+    }
+    @Test
+    void sortTest() {
+        Integer [] sort = {1, 2, 3};
+        out.sort();
+        Assertions.assertArrayEquals(sort, out.toArray());
+
     }
 }

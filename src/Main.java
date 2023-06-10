@@ -19,7 +19,9 @@ public class Main {
         stringList.clear();
         System.out.println(stringList);
         System.out.println(stringList.equals(stringList));
-        int[] test = {3, 2, 1, 4};
+        int[] test = {3, 2, 1, 4, 56, 23, 11};
+        mergeSort(test);
+        //quickSort(test, 0, test.length - 1);
         //sortBubble(test);
         //sortSelection(test);
         System.out.println(Arrays.toString(test));
@@ -30,15 +32,16 @@ public class Main {
         }
         int[] arr1 = Arrays.copyOf(arr, arr.length);
         int[] arr2 = Arrays.copyOf(arr, arr.length);
-        int[] arr3 = Arrays.copyOf(arr, arr.length);
-        /*long start1 = System.currentTimeMillis();
-        sortBubble(arr1);
+        //int[] arr3 = Arrays.copyOf(arr, arr.length);
+        //System.out.println(partition(test, 0, test.length - 1));
+        long start1 = System.currentTimeMillis();
+        quickSort(arr1, 0, arr1.length - 1);
         long time1 = System.currentTimeMillis() - start1;
-        System.out.println("sortBubble: " + time1);
+        System.out.println("quickSort: " + time1);
         long start2 = System.currentTimeMillis();
-        sortSelection(arr2);
+        mergeSort(arr2);
         long time2 = System.currentTimeMillis() - start2;
-        System.out.println("sortSelection: " + time2);*/
+        System.out.println("mergeSort: " + time2);
 
     }
 
@@ -67,6 +70,70 @@ public class Main {
                 }
             }
             swapElements(arr, i, minimalEl);
+        }
+    }
+
+    public static void quickSort(int[] arr, int begin, int end) {
+        if (begin < end) {
+            int partitionIndex = partition(arr, begin, end);
+            quickSort(arr, begin, partitionIndex - 1);
+            quickSort(arr, partitionIndex + 1, end);
+        }
+
+    }
+
+    public static int partition(int[] arr, int begin, int end) {
+        int pivot = arr[end];
+        int i = begin - 1;
+        for (int j = begin; j < end; j++) {
+            if (arr[j] <= pivot) {
+                i++;
+                swapElements(arr, i, j);
+            }
+        }
+        swapElements(arr, i + 1, end);
+        return i + 1;
+
+    }
+
+    public static void mergeSort(int[] arr) {
+        if (arr.length < 2) {
+            return;
+        }
+        int mid = arr.length / 2;
+        int[] left = new int[mid];
+        int[] right = new int[arr.length - mid];
+
+        for (int i = 0; i < left.length; i++) {
+            left[i] = arr[i];
+        }
+
+        for (int i = 0; i < right.length; i++) {
+            right[i] = arr[mid + i];
+        }
+
+        mergeSort(left);
+        mergeSort(right);
+
+        merge(arr, left, right);
+    }
+
+    public static void merge(int[] arr, int[] left, int[] right) {
+        int mainP = 0;
+        int leftP = 0;
+        int rightP = 0;
+        while (leftP < left.length && rightP < right.length) {
+            if (left[leftP] <= right[rightP]) {
+                arr[mainP++] = left[leftP++];
+            } else {
+                arr[mainP++] = right[rightP++];
+            }
+        }
+        while (leftP < left.length) {
+            arr[mainP++] = left[leftP++];
+        }
+        while (rightP < right.length) {
+            arr[mainP++] = right[rightP++];
         }
     }
 
